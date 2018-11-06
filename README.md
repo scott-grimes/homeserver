@@ -7,7 +7,7 @@
 * smart home service - 
 * DNS Ad-Blocker - PIHOLE
 * Monitoring - prometheus / grafana
-* Torrent Box - docker-transmission-openvpn?
+* Torrent Box - https://github.com/haugene/docker-transmission-openvpn
 * Email Service - docker-mailserver
 * Storage FREENAS
 
