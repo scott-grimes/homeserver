@@ -3,12 +3,12 @@
 
 
 ## Uses
-* media center - PLEX
+* media center - https://hub.docker.com/r/plexinc/pms-docker/
 * smart home service - 
 * DNS Ad-Blocker - PIHOLE
 * Monitoring - prometheus / grafana
 * Torrent Box - https://github.com/haugene/docker-transmission-openvpn
-* Email Service - docker-mailserver
+* Email Service - https://hub.docker.com/r/tvial/docker-mailserver/
 * Storage FREENAS
 
 
