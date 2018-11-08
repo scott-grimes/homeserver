@@ -15,11 +15,10 @@ podDisruptionBudget: {}
 
 # rootCAs: []
 
-#cpuRequest: 100m
-#memoryRequest: 20Mi
-#cpuLimit: 100m
-#memoryLimit: 30Mi
-
+cpuRequest: 100m
+memoryRequest: 20Mi
+cpuLimit: 100m
+memoryLimit: 30Mi
 debug:
   enabled: false
 
@@ -39,11 +38,10 @@ tolerations: []
 #   value: "value"
 #   effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 ## Kubernetes ingress filters
-kubernetes:
-  #endpoint:
-  namespaces:
-    - default
-    - kube-system
+# kubernetes:
+  # endpoint:
+  # namespaces:
+  # - default
   # labelSelector:
   # ingressClass:
   # ingressEndpoint:
@@ -257,7 +255,7 @@ acme:
     # existingClaim:
 dashboard:
   enabled: true
-  domain: traefik.cluster
+  domain: dashboard.cluster
   service: {}
     # annotations:
     #   key: value
