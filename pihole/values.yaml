@@ -5,7 +5,10 @@ image:
   repository: pihole/pihole
   tag: latest
   pullPolicy: IfNotPresent
-
+  env:
+    DNS1: "127.0.0.1"
+    DNS2: "1.1.1.1"
+    
 fullnameOverride: "pihole"
 
 ingress:

@@ -8,12 +8,28 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 53
+      targetPort: 53
       protocol: TCP
-      name: http
+      name: 53tcp
+    - port: 53
+      targetPort: 53
+      protocol: UDP
+      name: 53udp
+    - port: 67
+      targetPort: 67
+      protocol: UDP
+      name: 67udp
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: 80tcp
+    - port: 443
+      targetPort: 443
+      protocol: TCP
+      name: 443tcp
   selector:
     app.kubernetes.io/name: {{ include "pihole.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
