@@ -3,10 +3,13 @@
 
 ## Cluster Setup
 
-Starting with a clean cluster
+See BAREMETAL or AWS files to create a new cluster, once kubeconfig has the cluster context, proceed.
+
+Run
 ```
 helm init
 ```
+to prepare the cluster for installations via helm
 
 ## Ingress via Traefik
 
@@ -22,7 +25,7 @@ kubectl  delete deployment minikube-lb-patch -nkube-system
 
 1. Run
 ```
-helm install --name traefik --namespace kube-system ingress/traefik
+helm install --name traefik --namespace kube-system traefik
 ```
 
 2. Wait until EXTERNAL-IP is finished loading, check using the command
