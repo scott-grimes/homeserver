@@ -15,10 +15,10 @@ podDisruptionBudget: {}
 
 # rootCAs: []
 
-# cpuRequest: 100m
-# memoryRequest: 20Mi
-# cpuLimit: 100m
-# memoryLimit: 30Mi
+cpuRequest: 100m
+memoryRequest: 20Mi
+cpuLimit: 100m
+memoryLimit: 30Mi
 debug:
   enabled: false
 
@@ -254,10 +254,9 @@ acme:
     ##
     # existingClaim:
 dashboard:
-  enabled: true
-  domain: traefik.cluster
-  service: 
-    type: NodePort
+  enabled: false
+  domain: traefik.example.com
+  service: {}
     # annotations:
     #   key: value
   ingress: {}

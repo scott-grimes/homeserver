@@ -1,6 +1,9 @@
 # homeserver
+? 
+https://medium.com/@rothgar/exposing-services-using-ingress-with-on-prem-kubernetes-clusters-f413d87b6d34
 
-
+can hit "minikube service list"
+and curl dashboard ip successfully
 
 ## Uses
 * media center - https://hub.docker.com/r/plexinc/pms-docker/
