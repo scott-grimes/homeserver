@@ -15,7 +15,7 @@ metadata:
   {{- end }}
   {{- end }}
 spec:
-  type: {{ .Values.dashboard.service.type}}
+  type: LoadBalancer #{{ .Values.dashboard.service.type}}
   selector:
     app: {{ template "traefik.name" . }}
     release: {{ .Release.Name }}

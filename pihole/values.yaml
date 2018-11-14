@@ -16,8 +16,7 @@ nameOverride: "pihole"
 fullnameOverride: "pihole"
 
 service:
-  type: ClusterIP
-  port: 80
+  type: NodePort
 
 ingress:
   enabled: false
