@@ -1,5 +1,9 @@
 # RUNBOOK
 
+# minikube
+```
+minikube start --bootstrapper=kubeadm 
+```
 
 ## Cluster Setup
 
