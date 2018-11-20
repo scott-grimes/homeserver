@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: pihole
+  name: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - env:
+        - name: ServerIP
+          value: EXTERNAL_IP_ADDRESS
+        image: pihole/pihole:latest
+        imagePullPolicy: IfNotPresent
+        name: pihole
+        ports:
+        - containerPort: 80
+          name: pihole-http
+          protocol: TCP
+        - containerPort: 53
+          name: dns
+          protocol: TCP
+        - containerPort: 53
+          name: dns-udp
+          protocol: UDP
+        - containerPort: 443
+          name: pihole-ssl
+          protocol: TCP
+        - containerPort: 67
+          name: client-udp
+          protocol: UDP
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler

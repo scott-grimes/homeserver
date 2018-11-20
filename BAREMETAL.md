@@ -1,1 +1,0 @@
-https://metallb.universe.tf/tutorial/minikube/

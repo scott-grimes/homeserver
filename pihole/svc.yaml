@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+  labels:
+    app: pihole
+  name: pihole
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: pihole-http
+    nodePort: 31173
+    port: 80
+    protocol: TCP
+    targetPort: pihole-http
+  - name: pihole-https
+    nodePort: 32320
+    port: 443
+    protocol: TCP
+    targetPort: pihole-https
+  - name: dns
+    nodePort: 31795
+    port: 53
+    protocol: TCP
+    targetPort: dns
+  selector:
+    app: pihole
+  sessionAffinity: None
+  type: LoadBalancer
+  

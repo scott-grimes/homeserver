@@ -68,3 +68,16 @@ kubectl create serviceaccount --namespace kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller  
 kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 
 ```
+
+
+## allow fixed ip addresses for services with type=LoadBalancer
+must add the following to the metadata tag of each service
+  annotations:
+  service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+
+then use "host" to determine the ip
+
+
+
+
+AWS DOES NOT SUPPORT UDP LOADBALANCERS RIGHT NOW
