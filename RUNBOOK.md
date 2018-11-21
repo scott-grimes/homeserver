@@ -16,17 +16,7 @@ helm init
 to prepare the cluster for installations via helm
 NOTE: need to add tls verification later
 
-## Ingress via Traefik
-
-note: on minikube the external ip will not be exposed unless you run
-```
-kubectl run minikube-lb-patch --replicas=1 --image=elsonrodriguez/minikube-lb-patch:0.1 --namespace=kube-system
-```
-
-you can undo the patch by running
-```
-kubectl  delete deployment minikube-lb-patch -nkube-system
-```
+## Ingress via Traefik?
 
 1. Run
 ```
