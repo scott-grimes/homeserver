@@ -18,6 +18,10 @@ spec:
       - env:
         - name: ServerIP
           value: EXTERNAL_IP_ADDRESS
+        # - name: DNS1
+        #   value: 127.0.0.1 
+        # - name: DNS2
+        #   value: 1.1.1.1
         image: pihole/pihole:latest
         imagePullPolicy: IfNotPresent
         name: pihole
@@ -37,6 +41,5 @@ spec:
         - containerPort: 67
           name: client-udp
           protocol: UDP
-      dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
