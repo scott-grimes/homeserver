@@ -1,9 +1,4 @@
 # homeserver
-? 
-https://medium.com/@rothgar/exposing-services-using-ingress-with-on-prem-kubernetes-clusters-f413d87b6d34
-
-can hit "minikube service list"
-and curl dashboard ip successfully
 
 ## Uses
 * media center - https://hub.docker.com/r/plexinc/pms-docker/
@@ -17,11 +12,10 @@ and curl dashboard ip successfully
 
 
 ## Hardware
-16 port switch
-8 node cluster
-http://www.makercase.com/# for chassis
-https://up-shop.org/up-boards/43-up-board-4b-32-gb-emmc-memory.html
-24g ram
-24 cores
-router dual-band ac MIMO 4 gigabit prometheus
-modem: https://www.amazon.com/NETGEAR-WIRELESS-Spectrum-Cablevision-CM400-1AZNAS/dp/B0111MRLES/ref=cm_cr_srp_d_product_top?ie=UTF8
+8 port switch  
+8 node cluster  
+http://www.makercase.com/# for chassis  
+https://up-shop.org/up-boards/43-up-board-4b-32-gb-emmc-memory.html  
+32g ram  
+32 cores  
+router dual-band ac MIMO 4 gigabit prometheus  
