@@ -22,4 +22,3 @@ spec:
     app: pihole
   sessionAffinity: None
   type: LoadBalancer
-  loadBalancerIP: EXTERNAL_IP_ADDRESS
