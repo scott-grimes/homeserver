@@ -1,0 +1,45 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pihole
+  labels:
+    app: pihole
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+        - name: pihole
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          - containerPort: 80
+            name: pihole-http
+            protocol: TCP
+          - containerPort: 53
+            name: dns
+            protocol: TCP
+          - containerPort: 53
+            name: dns-udp
+            protocol: UDP
+          - containerPort: 443
+            name: pihole-ssl
+            protocol: TCP
+          - containerPort: 67
+            name: client-udp
+            protocol: UDP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          restartPolicy: Always
