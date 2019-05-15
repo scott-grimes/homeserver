@@ -1,0 +1,7 @@
+# asdf
+wlan0: wlx0013ef80087c
+
+# a list of wifi configs
+wifi_configs:
+  - ssid: facebookAndPorn
+    password: whatdoyoudowithadrunkensailor

@@ -1,0 +1,19 @@
+#jinja2:lstrip_blocks: True
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      dhcp6: no
+      addresses: [192.168.2.1/24]
+  wifis:
+   {{ wlan0 }}:
+      dhcp4: yes
+      dhcp6: no
+      access-points:
+        {% for conn in wifi_configs %}
+        {{ conn.ssid }}:
+          password: {{ conn.password }}
+        {% endfor %}
+        
