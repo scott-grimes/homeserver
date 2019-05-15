@@ -1,0 +1,72 @@
+# This file is used to
+# 1) Create a namespace "jenkins"
+# 2) Create a serviceaccount "jenkins", who has full access to the "jenkins" namespace 
+#
+# Apply this file "kubectl apply -f thisfilename.yaml" and then run 
+# kubectl describe -n jenkins serviceaccount jenkins to obtain the token id
+# ex: "jenkins-token-t7jgj"
+# you can then extract the token for authentication by running
+# kubectl get secret -n jenkins jenkins-token-t7jgj -o yaml | base64 -D
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins
+  labels:
+    name: jenkins
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins
+  namespace: jenkins
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: jenkins-user-full-access
+  namespace: jenkins
+rules:
+- apiGroups: ["", "extensions", "apps"]
+  resources: ["*"]
+  verbs: ["*"]
+- apiGroups: ["batch"]
+  resources:
+  - jobs
+  - cronjobs
+  verbs: ["*"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: jenkins-user-view
+  namespace: jenkins
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: jenkins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: jenkins-user-full-access
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-service
+  namespace: jenkins
+spec:
+  # type: LoadBalancer
+  selector:
+    name: jenkins
+  # ensure the client ip is propagated to avoid the invalid crumb issue when using LoadBalancer (k8s >=1.7)
+  #externalTrafficPolicy: Local
+  ports:
+    -
+      name: agent
+      port: 50000
+      protocol: TCP
+    -
+      name: ssh
+      port: 22
+      protocol: TCP

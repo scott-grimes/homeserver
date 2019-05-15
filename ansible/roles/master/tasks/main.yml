@@ -1,0 +1,35 @@
+# JENKINS WILL NOT RELOAD CREDENTIALS UNLESS THE CONTAINER ROLLS, even if you "reload from disk"
+- import_tasks: system.yml
+# - import_tasks: copy-files.yml
+# - import_tasks: docker.yml
+# - import_tasks: kubernetes.yml
+
+# - name: Clean Docker
+#   shell: "docker stop civjenkins; docker rm civjenkins; docker volume prune -f;"
+#   tags: [ 'never', 'restart' ]
+
+# # TODO: would like a tagged command to update in place if a container exists already
+
+# # logs docker into our ecr so we can pull the civjenkins image
+# - name: Docker login
+#   shell: "$(aws ecr get-login --region us-east-1 | sed 's/ \\-e none//')"
+
+# # create our docker container
+# - name: Create the jenkins container
+#   docker_container:
+#     name: civjenkins
+#     image: "{{ jenkins_image }}"
+#     pull: true
+#     keep_volumes: false
+#     volumes:
+#      - "{{ install_directory }}/configs:/usr/share/jenkins/ref/casc_configs:ro"
+#      - "{{ jobs_volume }}:/var/jenkins_home/jobs"
+#      - "{{ install_directory }}/ssl_conf:/var/jenkins_home/ssl_conf"
+#      # TODO: other volume needed until https://issues.jenkins-ci.org/browse/JENKINS-52697 is resoved
+#      - "{{ install_directory }}/groovy:/usr/share/jenkins/ref/init.groovy.d:ro"
+#     ports:
+#      - "80:8080"
+#      - "50000:50000"
+#      - "443:8443"
+#     restart_policy: always
+#     env_file: "{{ install_directory }}/envs"
