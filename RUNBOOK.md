@@ -13,3 +13,11 @@ NOTE: need to add tls verification later
 
 ## Monitor - Prometheus and Grafana
 
+
+
+
+
+
+## New Node
+
+* flash 
