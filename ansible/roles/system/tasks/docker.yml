@@ -1,0 +1,31 @@
+- name: Only run "update_cache=yes" if the last run older than 3600 seconds ago
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+    
+- name: add docker key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add ARM64 docker reop
+  apt_repository:
+    repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu bionic stable
+    state: present
+
+- name: Install docker and its dependecies
+  apt: 
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - docker-ce 
+    - docker-ce-cli 
+    - containerd.io
+
+- name: add user to docker group
+  user:
+    name: rock64
+    groups: docker
+    append: yes

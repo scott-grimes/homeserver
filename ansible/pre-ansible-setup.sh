@@ -12,11 +12,6 @@ mkdir -p ~/.ssh && echo "${PUBLIC_KEY}" >> ~/.ssh/authorized_keys;
 echo rock64 | \
   sudo -S bash -c 'echo "rock64 ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers'
 
-# add a name
-sudo mkdir -p /etc/nodeinfo && \
-echo rock64 |
-  sudo -S bash -c "echo ${NODE_NAME} > /etc/nodeinfo/name"
-
 # install python for ansible
 sudo apt-get update
 sudo apt-get install -y python3.6

@@ -1,7 +1,10 @@
 # asdf
 wlan0: wlx0013ef80087c
+static_ip: "192.168.0.69"
 
 # a list of wifi configs
 wifi_configs:
   - ssid: facebookAndPorn
     password: whatdoyoudowithadrunkensailor
+
+nodes_dhcp_range: "192.168.2.2,192.168.2.100"

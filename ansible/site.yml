@@ -1,9 +1,11 @@
 - hosts: master
   become: true
   roles:
+    - system
     - master
 
-# - hosts: slave
-#   become: true
-#   roles:
-#     - slave
+- hosts: node
+  become: true
+  roles:
+    - system
+    - node

@@ -10,13 +10,18 @@ The current image used is Ayufan's [bionic-minimal-rock64-0.7.9](https://github.
 
 
 
+3) Run the pre-ansible-setup.sh script for each board
+```bash
+thing
+```
 
+4) Run ansible against each node using
 
+```python
+asdf
+```
 
-
-
-
-
+5) find mac address of master node. in router add static IP for your master. update the playbook with the ip address 
 using ROOK for persisting storage?
 
 

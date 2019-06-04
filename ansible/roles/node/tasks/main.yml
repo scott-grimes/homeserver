@@ -1,0 +1,15 @@
+- debug:
+    msg: "NO join_command variable set! Did you pull the token from the master?"
+  when: join_command == ""
+
+- name: Copy the join command to server location
+  copy: 
+    content: "{{ join_command }}"
+    dest: /tmp/join-command.sh 
+    mode: 0777
+  when: join_command != ""
+
+- name: Join the node to cluster
+  command: sh /tmp/join-command.sh
+  when: join_command != ""
+

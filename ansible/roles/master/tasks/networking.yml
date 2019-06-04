@@ -1,7 +1,7 @@
-# read node name from /etc/nodeinfo/name as variable
-
-
-#over ride /etc/hosts
+- name: Only run "update_cache=yes" if the last run older than 3600 seconds ago
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: install required packages
   apt:
@@ -20,7 +20,6 @@
   
 - name: execute netplan
   command: netplan apply
-  register: hi
   become: true
 
 - name: template dnsmasq configuration
