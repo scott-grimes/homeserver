@@ -1,1 +1,3 @@
+# This will be replaced with the ansible-vault encrypted join_command
+# obtained from kubeadm during cluster init on the master node
 join_command: ""

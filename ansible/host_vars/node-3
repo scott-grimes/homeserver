@@ -1,0 +1,3 @@
+# NODE CONFIG
+static_ip: "192.168.2.25"
+ssd_uuid: something

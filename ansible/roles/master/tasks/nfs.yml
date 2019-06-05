@@ -1,0 +1,53 @@
+- name: Only run "update_cache=yes" if the last run older than 3600 seconds ago
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: install required packages
+  apt:
+    name: "{{ packages }}"
+    state: present
+  vars:
+    packages: 
+    - nfs-common
+    - nfs-kernel-server
+  become: true
+
+- name: create nfs dir
+  file: 
+    path: "{{ nfs_dir }}"
+    state: directory 
+    mode: 777 
+    owner: root
+    group: root
+
+- name: format drive
+  filesystem: 
+    fstype: ext4
+    dev: "{{ nfs_device }}"
+
+- name: mount drive
+  mount: 
+    name: "{{ nfs_dir }}"
+    src: "{{ nfs_device }}"
+    fstype: auto 
+    opts: defaults,nobootwait dump=0 passno=2 
+    state: mounted
+
+- name: copy /etc/exports
+  template: 
+    src: exports.j2 
+    dest: /etc/exports 
+    owner: root 
+    group: root
+
+- name: restart nfs server
+  service: 
+    name: nfs-kernel-server 
+    state: restarted
+    daemon_reload: yes
+
+# ensure mount on start
+# https://askubuntu.com/questions/164926/how-to-make-partitions-mount-at-startup
+
+# ensure service on start

@@ -32,3 +32,22 @@
 - name: Disable swap
   command: swapoff -a
   when: ansible_swaptotal_mb > 0
+
+- name: create data dir
+  file: 
+    path: "{{ data_dir }}"
+    state: directory 
+
+# ceph uses block? maybe no format?
+# - name: format drive
+#   filesystem: 
+#     fstype: ext4
+#     dev: "{{ data_dir }}"
+
+# - name: mount ssd
+#   mount:
+#     src: UUID={{ ssd_uuid }}
+#     path: "{{ data_dir }}"
+#     fstype: auto
+#     opts: defaults,nobootwait dump=0 passno=2 
+#     state: mounted

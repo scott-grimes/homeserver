@@ -1,6 +1,14 @@
-- debug:
-    msg: "NO join_command variable set! Did you pull the token from the master?"
+- name: Check for cluster token
   when: join_command == ""
+  vars:
+    msg: |
+         NO join_command variable set! 
+
+         ansible-vault encrypt the token from
+         /home/ubuntu/join_command on the master node
+         and store the value into the "join_command" variable
+  debug:
+    msg: "{{ msg.split('\n') }}"
 
 - name: Copy the join command to server location
   copy: 
@@ -12,4 +20,3 @@
 - name: Join the node to cluster
   command: sh /tmp/join-command.sh
   when: join_command != ""
-
