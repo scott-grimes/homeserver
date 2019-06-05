@@ -1,4 +1,4 @@
-# RUNBOOK
+# CLUSTER RUNBOOK
 
 ## Cluster Setup
 
@@ -12,12 +12,3 @@ to prepare the cluster for installations via helm
 NOTE: need to add tls verification later
 
 ## Monitor - Prometheus and Grafana
-
-
-
-
-
-
-## New Node
-
-* flash 
