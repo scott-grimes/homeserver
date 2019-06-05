@@ -7,9 +7,10 @@ The current image used is Ayufan's [bionic-minimal-rock64-0.7.9](https://github.
 
 2) Determine what CIDR block / DPCH range your nodes will occupy. 
 
+The master is connected to wifi via a usb dongle.
 The nodes recieve their internet access through a dnsmasq server
-running on the master node. This range is configured by
-setting the range of the masters host_vars as follows:
+running on the master node through it's ethernet adapter.
+This range is configured bysetting the range of the masters host_vars as follows:
 
 `nodes_dhcp_range: "192.168.2.2,192.168.2.100"`
 
@@ -25,16 +26,8 @@ ansible/pre-ansible-setup.sh 192.168.1.123 node-0
 
 4) Set a static_ip for each node in host_vars. nd for your master.At this point the nodes may all be plugged into the switchRun ansible against each node using
 
-```python
-asdf
+```bash
+ansible-playbook -i hosts.yml -l $HOST site.yml
 ```
 
-
-using ROOK for persisting storage?
-
-
-do I need ingress via Traefik?
-no metallb should be good enough
-
-
-https://medium.com/@rothgar/exposing-services-using-ingress-with-on-prem-kubernetes-clusters-f413d87b6d34
+5) At this point kubernetes is running but needs to be configured
