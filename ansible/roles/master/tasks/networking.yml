@@ -33,7 +33,6 @@
     state: reloaded
     daemon_reload: yes
 
-
 # sudo iptables -F
 # sudo iptables -t nat -F
 # sudo iptables -t nat -A POSTROUTING -o $wlan -j MASQUERADE

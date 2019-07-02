@@ -1,21 +1,27 @@
-- name: Initialize the Kubernetes cluster using kubeadm
-  command: "kubeadm init --apiserver-advertise-address {{ static_ip }} --apiserver-cert-extra-sans {{ static_ip }}  --node-name {{ inventory_host }} --pod-network-cidr=192.168.0.0/16"
-  # TODO: check if cluster already initalized
+# - name: Initialize the Kubernetes cluster using kubeadm
+#   command: "kubeadm init --apiserver-advertise-address {{ static_ip }} --apiserver-cert-extra-sans {{ static_ip }}  --node-name {{ inventory_host }} --pod-network-cidr=192.168.0.0/16"
+#   # TODO: check if cluster already initalized
 
-- name: Install calico pod network
-  command: kubectl create -f https://docs.projectcalico.org/v3.4/getting-started/kubernetes/installation/hosted/calico.yaml
-  # TODO: check if calico already running
 
-- name: check if token file exists
-  stat: 
-    path: /home/rock64/join_command
-  register: join_command_exists
+# post locally
+# curl https://docs.projectcalico.org/v3.7/manifests/calico.yaml -O
+# POD_CIDR="192.168.2.2/24" \
+# sed -i -e "s?192.168.0.0/16?$POD_CIDR?g" calico.yaml
+# kubectl apply -f calico.yaml
 
-- name: Generate join command
-  command: kubeadm token create --print-join-command
-  register: join_command
-  when: join_command_exists == False
 
-- debug:
-    msg: Please encrypt the token file, and store it as a default join_command variable in the nodes role
-  when: join_command 
+# - name: check if token file exists
+#   stat: 
+#     path: /home/rock64/join_command
+#   register: join_command_exists
+
+# - name: Generate join command
+#   command: kubeadm token create --print-join-command
+#   register: join_command
+#   when: join_command_exists == False
+
+# - debug:
+#     msg: Please encrypt the token command, and store it as a default join_command variable in the nodes role
+#   when: join_command 
+
+# # kubeadm join 192.168.0.69:6443 --token 6s2wan.60vntpv1sryn9v4g     --discovery-token-ca-cert-hash sha256:b73f852816e2c689b08e79fc0b1228361fe673fdcdc57f6fdfc25f10f841b3ed 

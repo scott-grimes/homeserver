@@ -3,7 +3,7 @@
     update_cache: yes
     cache_valid_time: 3600
 
-- name: install required packages
+- name: install nfs packages
   apt:
     name: "{{ packages }}"
     state: present
@@ -21,15 +21,10 @@
     owner: root
     group: root
 
-- name: format drive
-  filesystem: 
-    fstype: ext4
-    dev: "{{ nfs_device }}"
-
 - name: mount drive
   mount: 
     name: "{{ nfs_dir }}"
-    src: "{{ nfs_device }}"
+    src: "UUID={{ nfs_uuid }}"
     fstype: auto 
     opts: defaults,nobootwait dump=0 passno=2 
     state: mounted
