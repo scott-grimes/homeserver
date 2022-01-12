@@ -1,5 +1,0 @@
-- import_tasks: system.yml
-- import_tasks: docker.yml
-- import_tasks: kube.yml
-
-#https://github.com/ericbaum/ansible-rook

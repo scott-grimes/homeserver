@@ -1,0 +1,18 @@
+version: "2"
+
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2022.01.1
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+    environment:
+      TZ: 'America/New_York'
+      DNSMASQ_USER: 'root'
+      WEBPASSWORD: 'password'
+    volumes:
+      - '/data/etc-pihole:/etc/pihole'
+      - '/data/etc-dnsmasq.d:/etc/dnsmasq.d'
+    restart: unless-stopped

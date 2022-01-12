@@ -1,3 +1,0 @@
-- import_tasks: networking.yml
-- import_tasks: nfs.yml
-- import_tasks: kube.yml
