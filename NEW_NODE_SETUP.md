@@ -26,28 +26,12 @@ wget -c https://github.com/ayufan-rock64/linux-build/releases/download/0.9.14/st
 5) Modify NEW_HOSTNAME in following snippet, run as root
 
 ```
-NEW_HOSTNAME="something";
-WIFI_SSID="something"
-WIFI_PASS="password"
+NEW_HOSTNAME="myhostname";
 
 CONTAINERD="containerd.io_1.4.3-1_arm64.deb";
 DOCKER_BASE_URL="https://download.docker.com/linux/debian/dists/stretch/pool/stable/arm64";
 DOCKER_CLI="docker-ce-cli_19.03.9~3-0~debian-stretch_arm64.deb";
 DOCKER_CE="docker-ce_19.03.9~3-0~debian-stretch_arm64.deb";
-
-# WIFI CONFIG
-if [[ ! -f /etc/wpa_supplicant/wpa_supplicant.conf ]]; then
-    wpa_passphrase "${WIFI_SSID}" "${WIFI_PASS}" > /etc/wpa_supplicant/wpa_supplicant.conf;
-fi;
-
-if ! grep "wlan0" /etc/network/interfaces ; then   
-  cat << EOF >> /etc/network/interfaces
-auto wlan0
-iface wlan0 inet dhcp
-  wpa-ssid ${WIFI_SSID}
-  wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
-EOF
-fi;
 
 NEEDS_REBOOT=false
 if [[ "$(hostname)" != "${NEW_HOSTNAME}" ]]; then
@@ -84,21 +68,59 @@ fi;
 systemctl enable docker.service
 systemctl enable containerd.service
 
-mkdir -p /data
-
 if [[ "${NEEDS_REBOOT}" == "true" ]]; then
   reboot;
 fi;
 ```
 
-6) Format SD card (optional)
+6) Format SD card, mount on boot to /data (optional)
+
+```
+# find disk id via lsblk
+SSD_ID="mmcblk1"
+SSD_LABEL="homeserverdata"
+
+parted /dev/${SSD_ID} mklabel gpt
+parted -a opt /dev/${SSD_ID} mkpart primary ext4 0% 100%
+
+# fetch partition device from blkid eg "/dev/mmcblk1p1"
+SSD_DEVICE="/dev/${SSD_ID}p1"
+mkfs.ext4 -L homeserverdata "${SSD_DEVICE}"
+
+# get UUID (not PARTUUID) from blkid | grep "${SSD_LABEL}"
+SSD_UUID="myuuid"
+if ! grep "/data" /etc/fstab; then
+  mkdir /data
+  echo "UUID=${SSD_UUID} /data ext4 defaults 0 2" >> /etc/fstab
+  mount -a
+fi;
+```
+
+7) Enable wifi
+
+```
+WIFI_SSID="mynetworkname"
+WIFI_PASS="password"
+# wlxsomething
+WIFI_DEVICE=$(cat /proc/net/wireless | grep ^w | awk '{print $1}' | rev | cut -c2- | rev)
+
+if ! grep "${WIFI_DEVICE}" /etc/network/interfaces ; then   
+  cat << EOF >> /etc/network/interfaces
+auto ${WIFI_DEVICE}
+allow-hotplug ${WIFI_DEVICE}
+iface ${WIFI_DEVICE} inet dhcp
+        wpa-ssid ${WIFI_SSID}
+        wpa-psk ${WIFI_PASS}
+EOF
+fi;
+ip link set ${WIFI_DEVICE} up
+ifup ${WIFI_DEVICE}
 
 
+```
 
+8) Set a reserved ip address for board in router
 
+9) If pihole enabled visit http://pihole/admin/dns_records.php and set a dns entry for board
 
-7) Set a reserved ip address for board in router
-
-8) If pihole enabled visit http://pihole/admin/dns_records.php and set a dns entry for board
-
-9) Add entry to monitor/prometheus-config/homeserver-targets
+10) Add entry to monitor/prometheus-config/homeserver-targets

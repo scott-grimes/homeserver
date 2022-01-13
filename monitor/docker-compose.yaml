@@ -23,8 +23,8 @@ services:
       - /data/dashboard.json:/etc/grafana/dashboards/dashboard.json
     environment:
       - GF_USERS_ALLOW_SIGN_UP=false
-      - GF_SERVER_DOMAIN=grafana
-      - GF_SERVER_ROOT_URL=https://grafana/grafana
+      - GF_SERVER_DOMAIN=monitor
+      - GF_SERVER_ROOT_URL=https://monitor/grafana
       - GF_SERVER_SERVE_FROM_SUB_PATH=true
       - GF_SECURITY_ADMIN_USER=admin
       - GF_SECURITY_ADMIN_PASSWORD=password
