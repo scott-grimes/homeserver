@@ -1,0 +1,61 @@
+version: "2"
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:4.4.0
+    container_name: qbittorrent
+    network_mode: "host"
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+      WEBUI_PORT: 80
+
+      # set fixed thing?
+    volumes:
+      - /data/qbittorrent-config:/config
+      - /data/downloads:/downloads
+    restart: unless-stopped
+    privileged: true
+  openvpn:
+    build:
+      context: ./
+      dockerfile: Dockerfile.openvpn
+    network_mode: "host"
+    privileged: true
+    restart: unless-stopped
+    command:
+      - openvpn
+      - --config
+      - /config/config.ovpn
+    volumes:
+    - /data/config.ovpn:/config/config.ovpn
+    - /data/login.conf:/config/login.conf
+
+  node_exporter:
+    image: prom/node-exporter-linux-arm64:v1.3.1
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    network_mode: host
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+  cadvisor:
+    # no arm image yet image: gcr.io/cadvisor/cadvisor:v0.39.3
+    build:
+      context: ./
+      dockerfile: Dockerfile.cadvisor
+    container_name: cadvisor
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    ports:
+      - 8080:8080

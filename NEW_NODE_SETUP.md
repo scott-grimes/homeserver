@@ -26,12 +26,28 @@ wget -c https://github.com/ayufan-rock64/linux-build/releases/download/0.9.14/st
 5) Modify NEW_HOSTNAME in following snippet, run as root
 
 ```
-NEW_HOSTNAME="rock64-pihole";
+NEW_HOSTNAME="something";
+WIFI_SSID="something"
+WIFI_PASS="password"
 
 CONTAINERD="containerd.io_1.4.3-1_arm64.deb";
 DOCKER_BASE_URL="https://download.docker.com/linux/debian/dists/stretch/pool/stable/arm64";
 DOCKER_CLI="docker-ce-cli_19.03.9~3-0~debian-stretch_arm64.deb";
 DOCKER_CE="docker-ce_19.03.9~3-0~debian-stretch_arm64.deb";
+
+# WIFI CONFIG
+if [[ ! -f /etc/wpa_supplicant/wpa_supplicant.conf ]]; then
+    wpa_passphrase "${WIFI_SSID}" "${WIFI_PASS}" > /etc/wpa_supplicant/wpa_supplicant.conf;
+fi;
+
+if ! grep "wlan0" /etc/network/interfaces ; then   
+  cat << EOF >> /etc/network/interfaces
+auto wlan0
+iface wlan0 inet dhcp
+  wpa-ssid ${WIFI_SSID}
+  wpa-conf /etc/wpa_supplicant/wpa_supplicant.conf
+EOF
+fi;
 
 NEEDS_REBOOT=false
 if [[ "$(hostname)" != "${NEW_HOSTNAME}" ]]; then
@@ -55,7 +71,7 @@ if [[ "$?" == "1" ]]; then
   rm ${DOCKER_CLI};
 fi;
 
-dpkg -s docker-ce-cli &> /dev/null;
+dpkg -s docker-ce &> /dev/null;
 if [[ "$?" == "1" ]]; then
   wget -c "${DOCKER_BASE_URL}/${DOCKER_CE}" && dpkg -i ${DOCKER_CE};
   rm ${DOCKER_CE};
@@ -73,9 +89,16 @@ mkdir -p /data
 if [[ "${NEEDS_REBOOT}" == "true" ]]; then
   reboot;
 fi;
-
 ```
 
-6) Set a reserved ip address for board in router
+6) Format SD card (optional)
 
-7) If pihole enabled visit http://pihole/admin and set a dns entry for board
+
+
+
+
+7) Set a reserved ip address for board in router
+
+8) If pihole enabled visit http://pihole/admin/dns_records.php and set a dns entry for board
+
+9) Add entry to monitor/prometheus-config/homeserver-targets
