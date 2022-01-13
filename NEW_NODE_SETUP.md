@@ -116,7 +116,6 @@ fi;
 ip link set ${WIFI_DEVICE} up
 ifup ${WIFI_DEVICE}
 
-
 ```
 
 8) Set a reserved ip address for board in router
