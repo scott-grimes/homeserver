@@ -1,0 +1,5 @@
+[
+  {
+    "targets": [ "pihole", "torrent", "monitor", "media"]
+  }
+]

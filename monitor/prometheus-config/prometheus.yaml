@@ -1,0 +1,45 @@
+global:
+  scrape_interval:     1m
+  evaluation_interval: 30s
+  scrape_timeout: 10s
+
+# # Alertmanager configuration
+# alerting:
+#   alertmanagers:
+#   - static_configs:
+#     - targets:
+      # - alertmanager:9093
+
+scrape_configs:
+- job_name: 'node_exporter'
+  file_sd_configs:
+  - files:
+    - homeserver-targets.json
+  relabel_configs:
+  - source_labels: [__address__]
+    separator: ''
+    target_label: node
+    replacement: '${1}'
+  - source_labels: [__address__]
+    target_label: __address__
+    replacement: ${1}:9100
+  metric_relabel_configs:
+  - source_labels: [__name__]
+    regex: (?i)(node_thermal_zone_temp|node_cpu_seconds_total|node_memory_MemTotal_bytes|node_memory_MemFree_bytes|node_filesystem_avail_bytes|node_filesystem_size_bytes|node_network_receive_bytes_total|node_network_transmit_bytes_total|node_boot_time_seconds)
+    action: keep
+- job_name: 'cadvisor'
+  file_sd_configs:
+  - files:
+    - homeserver-targets.json
+  metric_relabel_configs:
+  - source_labels: [__name__]
+    regex: (?i)(container_start_time_seconds|container_memory_usage_bytes|container_cpu_usage_seconds_total|machine_cpu_cores)
+    action: keep
+  relabel_configs:
+  - source_labels: [__address__]
+    separator: ''
+    target_label: node
+    replacement: '${1}'
+  - source_labels: [__address__]
+    target_label: __address__
+    replacement: ${1}:8080
