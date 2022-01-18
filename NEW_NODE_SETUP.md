@@ -68,6 +68,10 @@ fi;
 systemctl enable docker.service
 systemctl enable containerd.service
 
+if ! grep -q rock64 /etc/sudoers; then
+  echo "rock64 ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers;
+fi;
+
 if [[ "${NEEDS_REBOOT}" == "true" ]]; then
   reboot;
 fi;
@@ -87,7 +91,8 @@ parted -a opt /dev/${SSD_ID} mkpart primary ext4 0% 100%
 SSD_DEVICE="/dev/${SSD_ID}p1"
 mkfs.ext4 -L homeserverdata "${SSD_DEVICE}"
 
-# get UUID (not PARTUUID) from blkid | grep "${SSD_LABEL}"
+# get UUID (not PARTUUID) from
+# blkid | grep "${SSD_LABEL}"
 SSD_UUID="myuuid"
 if ! grep "/data" /etc/fstab; then
   mkdir /data

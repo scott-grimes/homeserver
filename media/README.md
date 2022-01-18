@@ -3,6 +3,6 @@
 1) Assume root, copy files to `/data` then
 
 ```
-chmod -R 777 . 
+mkdir -p /data/media
 docker-compose up -d
 ```

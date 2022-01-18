@@ -21,7 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -79,7 +78,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": false,
-          "expr": "time() - (sum without(instance,job)(node_boot_time_seconds) > on(node) group_right sum by(node,name) (container_start_time_seconds{name!=\"\"}) or sum by(node,name) (container_start_time_seconds{name!=\"\"}))",
+          "expr": "time() - (sum without(instance,job)(node_boot_time_seconds) > on(node) group_right sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}) or sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -194,7 +193,7 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 7,
+        "w": 8,
         "x": 7,
         "y": 0
       },
@@ -216,7 +215,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_usage_bytes{name!=\"\"}) by (node,name) \n/ ignoring(name) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
+          "expr": "sum(container_memory_usage_bytes{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}) by (node,name) \n/ ignoring(name) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
@@ -280,8 +279,8 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 7,
-        "x": 14,
+        "w": 8,
+        "x": 15,
         "y": 0
       },
       "id": 14,
@@ -302,7 +301,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\"}[5m]))/ignoring(name) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
+          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}[5m]))/ignoring(name) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
           "instant": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
@@ -697,6 +696,158 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Down"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 17,
+        "y": 9
+      },
+      "id": 20,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "C3hREdJnk"
+          },
+          "exemplar": true,
+          "expr": "up{job=\"cadvisor\"}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Cadvisor",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Down"
+                },
+                "1": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Up"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 17,
+        "y": 15
+      },
+      "id": 21,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": false
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "C3hREdJnk"
+          },
+          "exemplar": true,
+          "expr": "up{job=\"node_exporter\"}",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Node Exporter",
+      "type": "gauge"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -769,7 +920,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "rate(node_network_receive_bytes_total{device=\"eth0\"}[5m])",
+          "expr": "rate(node_network_receive_bytes_total{device=~\"eth0|wlx.*\"}[5m])",
           "instant": false,
           "interval": "",
           "legendFormat": "{{node}}:recieve",
@@ -781,7 +932,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "-rate(node_network_transmit_bytes_total{device=\"eth0\"}[5m])",
+          "expr": "-rate(node_network_transmit_bytes_total{device=~\"eth0|wlx.*\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}:transmit",
@@ -980,6 +1131,6 @@
   "timezone": "",
   "title": "Homeserver",
   "uid": "e2NSPd17k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
