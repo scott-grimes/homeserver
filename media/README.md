@@ -4,5 +4,6 @@
 
 ```
 mkdir -p /data/media
+chmod 0777 /data/media
 docker-compose up -d
 ```
