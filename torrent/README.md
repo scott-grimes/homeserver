@@ -17,3 +17,12 @@ docker-compose up -d
 ```
 
 5) Login to qbittorrent via the web portal, configure network interface (eg `tun0`) to use only the network interfaced from step 3
+
+
+## Move Media
+
+```
+DIR_TO_MOVE="/data/downloads/somedir"
+PASSWORD="somepass"
+nohup sshpass -p "${PASSWORD}" rsync -r -P -z -e ssh $DIR_TO_MOVE rock64@media:/data/media > /data/$(date +%s)-nohup.out 2>&1 &
+```
