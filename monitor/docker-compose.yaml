@@ -11,16 +11,80 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yaml'
       - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+      - '--storage.tsdb.min-block-duration=2h'
+      - '--storage.tsdb.max-block-duration=2h'
     ports:
       - 9090:9090
+  thanos_sidecar:
+    image: thanosio/thanos:v0.25.0-rc.0
+    container_name: thanos_sidecar
+    restart: unless-stopped
+    volumes:
+      - /data/prometheus-data:/prometheus
+      - /data/thanos-data:/data
+      - /data/thanos-config:/opt/thanos
+    command:
+      - 'sidecar'
+      - '--prometheus.url=http://prometheus:9090'
+      - '--tsdb.path=/prometheus'
+      - '--objstore.config-file=/opt/thanos/config.yaml'
+      - '--http-address=0.0.0.0:19191'
+      - '--grpc-address=0.0.0.0:19090'
+    links:
+      - "prometheus"
+  thanos_store:
+    image: thanosio/thanos:v0.25.0-rc.0
+    container_name: thanos_store
+    restart: unless-stopped
+    volumes:
+      - /data/thanos-data:/data
+      - /data/thanos-config:/opt/thanos
+    command:
+      - 'store'
+      - '--data-dir=/cache'
+      - '--objstore.config-file=/opt/thanos/config.yaml'
+      - '--http-address=0.0.0.0:19191'
+      - '--grpc-address=0.0.0.0:19090'
+  thanos_compactor:
+    image: thanosio/thanos:v0.25.0-rc.0
+    container_name: thanos_compactor
+    restart: unless-stopped
+    volumes:
+      - /data/thanos-data:/data
+      - /data/thanos-config:/opt/thanos
+    command:
+      - 'compact'
+      - '--data-dir=/compact'
+      - '--objstore.config-file=/opt/thanos/config.yaml'
+      - '--http-address=0.0.0.0:19191'
+  thanos_query:
+    image: thanosio/thanos:v0.25.0-rc.0
+    container_name: thanos_query
+    restart: unless-stopped
+    volumes:
+      - /data/thanos-config:/opt/thanos
+    command:
+      - 'query'
+      - '--http-address=0.0.0.0:19192'
+      - '--grpc-address=0.0.0.0:19092'
+      - '--store=thanos_sidecar:19090'
+      - '--store=thanos_store:19090'
+      - '--store=thanos_compactor:19090'
+    ports:
+      - 19192:19192
+    links:
+      - "thanos_sidecar"
+      - "thanos_store"
+      - "thanos_compactor"
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
     restart: unless-stopped
     volumes:
       - /data/grafana-data:/var/lib/grafana
-      - /data/grafana-provisioning:/etc/grafana/provisioning
-      - /data/dashboard.json:/etc/grafana/dashboards/dashboard.json
+      - /data/grafana-config/provisioning:/etc/grafana/provisioning
+      - /data/grafana-config/dashboards:/etc/grafana/dashboards
     environment:
       - GF_USERS_ALLOW_SIGN_UP=false
       - GF_SERVER_DOMAIN=monitor
@@ -30,6 +94,7 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=password
     links:
       - "prometheus"
+      - "thanos_query"
     ports:
        - 80:3000
 

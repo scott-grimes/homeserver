@@ -21,6 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "iteration": 1645556389968,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -78,7 +79,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": false,
-          "expr": "time() - (sum without(instance,job)(node_boot_time_seconds) > on(node) group_right sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}) or sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}))",
+          "expr": "time() - (sum without(instance,job)(node_boot_time_seconds) > on(node) group_right sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}) or sum by(node,name) (container_start_time_seconds{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}))",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -215,7 +216,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_usage_bytes{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}) by (node,name) \n/ ignoring(name) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
+          "expr": "sum(container_memory_usage_bytes{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}) by (node,name) \n/ ignoring(name) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
@@ -301,7 +302,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\"}[5m]))/ignoring(name) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
+          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}[5m]))/ignoring(name) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
           "instant": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
@@ -377,7 +378,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": false,
-          "expr": "time()-node_boot_time_seconds",
+          "expr": "time()-node_boot_time_seconds{node=~\"$hosts\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -513,7 +514,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "node_thermal_zone_temp",
+          "expr": "node_thermal_zone_temp{node=~\"$hosts\"}",
           "interval": "",
           "legendFormat": "{{node}}",
           "refId": "A"
@@ -598,7 +599,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "100 - (avg by (node) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "expr": "100 - (avg by (node) (irate(node_cpu_seconds_total{mode=\"idle\",node=~\"$hosts\"}[5m])) * 100)",
           "interval": "",
           "legendFormat": "{{node}}",
           "refId": "A"
@@ -683,7 +684,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes)/node_memory_MemTotal_bytes",
+          "expr": "(node_memory_MemTotal_bytes - node_memory_MemFree_bytes)/node_memory_MemTotal_bytes{node=~\"$hosts\"}",
           "interval": "",
           "legendFormat": "{{node}}",
           "refId": "A"
@@ -920,7 +921,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "rate(node_network_receive_bytes_total{device=~\"eth0|wlx.*\"}[5m])",
+          "expr": "rate(node_network_receive_bytes_total{device=~\"eth0|wlx.*\",node=~\"$hosts\"}[5m])",
           "instant": false,
           "interval": "",
           "legendFormat": "{{node}}:recieve",
@@ -932,7 +933,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "-rate(node_network_transmit_bytes_total{device=~\"eth0|wlx.*\"}[5m])",
+          "expr": "-rate(node_network_transmit_bytes_total{device=~\"eth0|wlx.*\",node=~\"$hosts\"}[5m])",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}:transmit",
@@ -1019,7 +1020,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "node_filesystem_avail_bytes{fstype!=\"rootfs\",mountpoint=\"/\"}",
+          "expr": "node_filesystem_avail_bytes{fstype!=\"rootfs\",mountpoint=\"/\",node=~\"$hosts\"}",
           "interval": "",
           "legendFormat": "{{node}}",
           "refId": "A"
@@ -1105,7 +1106,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "node_filesystem_avail_bytes{fstype!=\"rootfs\",mountpoint=\"/data\"}",
+          "expr": "node_filesystem_avail_bytes{fstype!=\"rootfs\",mountpoint=\"/data\",node=~\"$hosts\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}",
@@ -1121,7 +1122,59 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "hosts",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "pihole",
+            "value": "pihole"
+          },
+          {
+            "selected": false,
+            "text": "torrent",
+            "value": "torrent"
+          },
+          {
+            "selected": false,
+            "text": "monitor",
+            "value": "monitor"
+          },
+          {
+            "selected": false,
+            "text": "media",
+            "value": "media"
+          },
+          {
+            "selected": false,
+            "text": "hub",
+            "value": "hub"
+          }
+        ],
+        "query": "pihole,torrent,monitor,media,hub",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
   },
   "time": {
     "from": "now-15m",
@@ -1131,6 +1184,6 @@
   "timezone": "",
   "title": "Homeserver",
   "uid": "e2NSPd17k",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

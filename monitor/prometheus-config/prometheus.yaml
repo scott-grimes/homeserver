@@ -2,7 +2,8 @@ global:
   scrape_interval:     1m
   evaluation_interval: 30s
   scrape_timeout: 10s
-
+  external_labels:
+    monitor: hub
 # # Alertmanager configuration
 # alerting:
 #   alertmanagers:
@@ -43,3 +44,13 @@ scrape_configs:
   - source_labels: [__address__]
     target_label: __address__
     replacement: ${1}:8080
+- job_name: 'homeassistant'
+  metrics_path: /api/prometheus
+  static_configs:
+  - targets:
+    - hub:80
+  bearer_token: FIXME
+  metric_relabel_configs:
+  - source_labels: [__name__]
+    regex: (?i)(homeassistant_.*)
+    action: keep

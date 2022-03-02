@@ -1,5 +1,5 @@
 [
   {
-    "targets": [ "pihole", "torrent", "monitor", "media"]
+    "targets": [ "pihole", "torrent", "monitor", "media", "hub"]
   }
 ]
