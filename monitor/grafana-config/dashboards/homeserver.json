@@ -216,7 +216,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_usage_bytes{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}) by (node,name) \n/ ignoring(name) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
+          "expr": "sum(container_memory_usage_bytes{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}) by (node,name) \n/ ignoring(name, monitor) group_left sum without(instance,job)(node_memory_MemTotal_bytes)\n\n",
           "hide": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
@@ -302,7 +302,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}[5m]))/ignoring(name) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
+          "expr": "sum by(node,name) (rate(container_cpu_usage_seconds_total{name!=\"\",name!=\"cadvisor\",name!=\"node_exporter\",node=~\"$hosts\"}[5m]))/ignoring(name, monitor) group_left sum without(job,boot_id,machine_id,system_uuid,instance)(machine_cpu_cores)\n",
           "instant": false,
           "interval": "",
           "legendFormat": "{{node}}:{{name}}",
