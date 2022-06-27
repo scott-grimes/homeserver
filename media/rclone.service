@@ -1,0 +1,32 @@
+[Unit]
+Description=rclone
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=notify
+Environment=RCLONE_CONFIG=/data/rclone.conf
+KillMode=none
+RestartSec=5
+ExecStart=/usr/bin/rclone mount merged: /data/media \
+--allow-other \
+--user-agent root \
+--log-file /var/log/rclone.log \
+--log-level NOTICE \
+--poll-interval 1m \
+--umask 002  \
+--cache-dir=/data/rclonecache \
+--vfs-cache-mode full \
+--user-agent "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36" \
+--vfs-cache-max-size 50G \
+--vfs-cache-max-age 5000h \
+--tpslimit 5 \
+--tpslimit-burst 5 \
+--read-only
+ExecStop=/bin/fusermount -uz /data/media
+Restart=on-failure
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

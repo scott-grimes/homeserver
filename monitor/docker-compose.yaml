@@ -57,6 +57,8 @@ services:
       - 'compact'
       - '--data-dir=/compact'
       - '--objstore.config-file=/opt/thanos/config.yaml'
+      - '--wait'
+      - '--wait-interval=1h'
       - '--http-address=0.0.0.0:19191'
   thanos_query:
     image: thanosio/thanos:v0.25.0-rc.0

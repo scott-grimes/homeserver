@@ -21,7 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -281,7 +280,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_humidity_percent",
+          "expr": "homeassistant_sensor_humidity_percent unless homeassistant_entity_available == 0",
           "hide": false,
           "interval": "",
           "legendFormat": "{{entity}}",
@@ -452,7 +451,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_battery_percent{domain=\"sensor\"}",
+          "expr": "homeassistant_sensor_battery_percent{domain=\"sensor\"} unless homeassistant_entity_available == 0",
           "interval": "",
           "legendFormat": "{{entity}}",
           "refId": "A"
@@ -537,7 +536,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_f{entity=\"sensor.home_temperature\"}",
+          "expr": "homeassistant_sensor_unit_f{entity=\"sensor.home_temperature\"} ",
           "interval": "",
           "legendFormat": "Exterior",
           "refId": "A"
@@ -548,7 +547,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_temperature_celsius * 9/5 + 32",
+          "expr": "homeassistant_sensor_temperature_celsius * 9/5 + 32 unless homeassistant_entity_available == 0",
           "hide": false,
           "interval": "",
           "legendFormat": "{{entity}}",
@@ -658,6 +657,6 @@
   "timezone": "",
   "title": "Home Assistant",
   "uid": "WRf5aZL7z",
-  "version": 9,
+  "version": 1,
   "weekStart": ""
 }
