@@ -84,7 +84,6 @@ services:
     container_name: grafana
     restart: unless-stopped
     volumes:
-      - /data/grafana-data:/var/lib/grafana
       - /data/grafana-config/provisioning:/etc/grafana/provisioning
       - /data/grafana-config/dashboards:/etc/grafana/dashboards
     environment:
