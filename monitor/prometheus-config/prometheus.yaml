@@ -49,7 +49,9 @@ scrape_configs:
   static_configs:
   - targets:
     - hub:80
-  bearer_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIxNDA0MzNlY2YxMDg0YWUzODJkNjZkYWE2NmM4ZTE0ZiIsImlhdCI6MTY0NTc2MzI2NSwiZXhwIjoxOTYxMTIzMjY1fQ.wtSLCZvTT9StT9QBy9OYVV76AWLj13G57luGOaLDv0E
+  authorization:
+    type: Bearer
+    credentials_file: hub_token
   metric_relabel_configs:
   - source_labels: [__name__]
     regex: (?i)(homeassistant_.*)

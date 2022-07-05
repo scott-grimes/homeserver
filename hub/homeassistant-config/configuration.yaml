@@ -1,0 +1,61 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+- platform: google_translate
+
+homeassistant:
+  name: Home
+  temperature_unit: F
+  currency: USD
+  unit_system: imperial
+  time_zone: !secret home_timezone
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  elevation: !secret home_elevation
+
+# https://community.home-assistant.io/t/how-to-keep-your-recorder-database-size-under-control/295795
+# recorder:
+#   purge_keep_days: 1
+#   commit_interval: 60
+
+automation: []
+script:
+scene:
+prometheus:
+device_tracker: !include device_tracker.yaml
+person: !include person.yaml
+
+binary_sensor:
+  - platform: ping
+    name: internet_uptime
+    host: example.com
+
+template:
+- sensor:
+  - unique_id: home_temperature
+    name: "Temperature"
+    unit_of_measurement: "F"
+    state: "{{ state_attr('weather.home_hourly','temperature') }}"
+  - unique_id: home_humidity
+    name: "Humidity"
+    unit_of_measurement: "%"
+    icon: mdi:water-percent
+    state: "{{ state_attr('weather.home_hourly', 'humidity') }}"
+  - unique_id: home_pressure
+    name: "Pressure"
+    unit_of_measurement: "mbar"
+    state: "{{ state_attr('weather.home_hourly', 'pressure') * 33.864 }}"
+  - unique_id: home_wind_speed
+    name: "Wind Speed"
+    unit_of_measurement: "mph"
+    state: "{{ state_attr('weather.home_hourly', 'wind_speed') }}"
+  - unique_id: home_wind_bearing
+    name: "Wind Bearing"
+    unit_of_measurement: "degree"
+    state: "{{ state_attr('weather.home_hourly', 'wind_bearing') }}"
+  - unique_id: internet_ping
+    name: "Internet Ping"
+    unit_of_measurement: "ms"
+    state: "{{ state_attr('binary_sensor.internet_uptime', 'round_trip_time_avg') }}"

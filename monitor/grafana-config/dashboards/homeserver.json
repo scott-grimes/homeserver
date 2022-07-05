@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,11 +24,15 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1645556389968,
+  "iteration": 1657041023789,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -34,7 +41,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -71,7 +79,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
           "datasource": {
@@ -141,6 +149,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -206,7 +218,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -227,6 +240,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -292,7 +309,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -325,6 +343,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -333,7 +355,8 @@
           "custom": {
             "align": "auto",
             "displayMode": "auto",
-            "filterable": false
+            "filterable": false,
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -370,7 +393,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
           "datasource": {
@@ -440,6 +463,10 @@
       "type": "table"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -504,7 +531,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -524,6 +552,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -589,7 +621,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -609,6 +642,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -674,7 +711,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -694,6 +732,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -751,7 +793,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": false
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
           "datasource": {
@@ -770,6 +812,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -827,7 +873,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": false
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
           "datasource": {
@@ -846,6 +892,10 @@
       "type": "gauge"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -911,7 +961,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -944,6 +995,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1010,7 +1065,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -1030,6 +1086,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1096,7 +1156,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -1118,7 +1179,7 @@
     }
   ],
   "refresh": "",
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1184,6 +1245,6 @@
   "timezone": "",
   "title": "Homeserver",
   "uid": "e2NSPd17k",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }

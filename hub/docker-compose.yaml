@@ -1,18 +1,20 @@
 version: "2"
 services:
-  jellyfin:
-    image: lscr.io/linuxserver/jellyfin:10.8.1
-    container_name: jellyfin
+  homeassistant:
+    container_name: homeassistant
+    image: linuxserver/homeassistant:arm64v8-2022.6.7
     environment:
-      PUID: 1000
-      PGID: 1000
-      TZ: 'America/New_York'
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
     volumes:
-      - /data/jellyfin-config:/config
-      - /data/media:/data
-    ports:
-      - 80:8096
+      - /data/homeassistant-config:/config
+      # - /dev/serial/by-id/<id>:/dev/ttyUSB0
     restart: unless-stopped
+    privileged: true
+    ports:
+      - 80:8123
+
   node_exporter:
     image: prom/node-exporter-linux-arm64:v1.3.1
     container_name: node_exporter

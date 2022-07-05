@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -25,6 +28,10 @@
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -89,7 +96,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -109,6 +117,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -174,7 +186,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -184,7 +197,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_mbar{entity=\"sensor.home_pressure\", friendly_name=\"Pressure\"}",
+          "expr": "homeassistant_sensor_unit_mbar{entity=\"sensor.pressure\", friendly_name=\"Pressure\"}",
           "interval": "",
           "legendFormat": "Exterior",
           "refId": "A"
@@ -194,6 +207,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -259,7 +276,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -269,7 +287,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_percent{entity=\"sensor.home_humidity\", friendly_name=\"Humidity\"}",
+          "expr": "homeassistant_sensor_unit_percent{entity=\"sensor.humidity\", friendly_name=\"Humidity\"}",
           "interval": "",
           "legendFormat": "Exterior",
           "refId": "A"
@@ -291,6 +309,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -356,7 +378,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -366,7 +389,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_mph{entity=\"sensor.home_wind_speed\", friendly_name=\"Wind Speed\"}",
+          "expr": "homeassistant_sensor_unit_mph{entity=\"sensor.wind_speed\", friendly_name=\"Wind Speed\"}",
           "interval": "",
           "legendFormat": "mph",
           "refId": "A"
@@ -376,6 +399,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -441,7 +468,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -461,6 +489,10 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "C3hREdJnk"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -526,7 +558,8 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
@@ -536,7 +569,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_f{entity=\"sensor.home_temperature\"} ",
+          "expr": "homeassistant_sensor_unit_f{entity=\"sensor.temperature\"} ",
           "interval": "",
           "legendFormat": "Exterior",
           "refId": "A"
@@ -556,94 +589,9 @@
       ],
       "title": "Temperature",
       "type": "timeseries"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "velocitymph"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 0,
-        "y": 16
-      },
-      "id": 5,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "C3hREdJnk"
-          },
-          "exemplar": true,
-          "expr": "homeassistant_sensor_unit_mph{entity=\"sensor.home_wind_speed\", friendly_name=\"Wind Speed\"}",
-          "interval": "",
-          "legendFormat": "mph",
-          "refId": "A"
-        }
-      ],
-      "title": "Wind Speed",
-      "type": "timeseries"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
