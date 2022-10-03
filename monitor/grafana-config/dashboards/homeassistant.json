@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -287,7 +288,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_percent{entity=\"sensor.humidity\", friendly_name=\"Humidity\"}",
+          "expr": "homeassistant_sensor_unit_percent{entity=\"sensor.humidity\"} unless homeassistant_entity_available == 0",
           "interval": "",
           "legendFormat": "Exterior",
           "refId": "A"
@@ -297,11 +298,13 @@
             "type": "prometheus",
             "uid": "C3hREdJnk"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "homeassistant_sensor_humidity_percent unless homeassistant_entity_available == 0",
+          "expr": "homeassistant_sensor_humidity_percent{entity=~\"sensor.*\"} unless homeassistant_entity_available == 0",
           "hide": false,
           "interval": "",
-          "legendFormat": "{{entity}}",
+          "legendFormat": "{{friendly_name}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -389,7 +392,7 @@
             "uid": "C3hREdJnk"
           },
           "exemplar": true,
-          "expr": "homeassistant_sensor_unit_mph{entity=\"sensor.wind_speed\", friendly_name=\"Wind Speed\"}",
+          "expr": "homeassistant_sensor_unit_mph{domain=\"sensor\", entity=\"sensor.wind_speed\", friendly_name=\"Wind Speed\"}",
           "interval": "",
           "legendFormat": "mph",
           "refId": "A"
@@ -598,7 +601,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
